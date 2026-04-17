@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <style>
+        body { margin: 0; background-color: transparent; }
+        model-viewer { width: 100vw; height: 100vh; background-color: transparent; }
+        
+        .hotspot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            background-color: var(--fatigue-color, #00f0ff);
+            box-shadow: 0 0 10px var(--fatigue-color, #00f0ff);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .hotspot:hover { transform: scale(1.5); }
+        
+        .label {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(14, 14, 15, 0.8);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-family: sans-serif;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <model-viewer 
+        id="viewer"
+        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+        alt="Anatomical Visual Twin"
+        auto-rotate
+        camera-controls
+        touch-action="none"
+        shadow-intensity="1"
+        camera-target="0m 1m 0m"
+        camera-orbit="0deg 75deg 3m">
+        
+        <!-- Hotspots will be injected here or updated via JS -->
+        <button class="hotspot" slot="hotspot-chest" data-position="0m 1.3m 0.2m" data-normal="0m 0m 1m" style="--fatigue-color: {{CHEST_COLOR}}">
+            <div class="label">Chest</div>
+        </button>
+        
+        <button class="hotspot" slot="hotspot-shoulders-l" data-position="-0.3m 1.4m 0.1m" data-normal="0m 0m 1m" style="--fatigue-color: {{SHOULDERS_COLOR}}">
+            <div class="label">Shoulders</div>
+        </button>
+
+        <button class="hotspot" slot="hotspot-shoulders-r" data-position="0.3m 1.4m 0.1m" data-normal="0m 0m 1m" style="--fatigue-color: {{SHOULDERS_COLOR}}">
+        </button>
+
+        <button class="hotspot" slot="hotspot-abs" data-position="0m 1.0m 0.2m" data-normal="0m 0m 1m" style="--fatigue-color: {{ABS_COLOR}}">
+            <div class="label">Core</div>
+        </button>
+
+        <button class="hotspot" slot="hotspot-quads-l" data-position="-0.15m 0.5m 0.2m" data-normal="0m 0m 1m" style="--fatigue-color: {{LEGS_COLOR}}">
+            <div class="label">Legs</div>
+        </button>
+        
+        <button class="hotspot" slot="hotspot-back" data-position="0m 1.3m -0.2m" data-normal="0m 0m -1m" style="--fatigue-color: {{BACK_COLOR}}">
+            <div class="label">Back</div>
+        </button>
+        
+    </model-viewer>
+
+    <script>
+        // Optional: Add interaction logic
+        const viewer = document.querySelector('#viewer');
+        viewer.addEventListener('load', () => {
+            console.log('Model loaded');
+        });
+    </script>
+</body>
+</html>
